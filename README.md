@@ -16,6 +16,13 @@ Assuntos abordados por dia:
 - Deployment usando configMap como volume
 ```
 
+Para alterar o cluster no qual deseja se conectar:
+
+```shell script
+kubectl config get-contexts
+kubectl config use-context NOME_CONTEXTO
+```
+
 Criar namespace:
 
 ```shell script
