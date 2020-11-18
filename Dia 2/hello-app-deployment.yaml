@@ -16,22 +16,7 @@ spec:
     spec:
       containers:
       - name: nginx
-        image: gcr.io/google-samples/hello-app:1.0
-        imagePullPolicy: Always
-        env:
-          - name: VARIAVEL_DIRETA
-            value: "DEFINI_DIRETAMENTE"
-          - name: VARIAVEL_DO_CONFIGMAP
-            valueFrom:
-              configMapKeyRef:
-                key: K8S_COURSE
-                name: nginx-configmap-envvars
-#        envFrom:
-#          - configMapRef:
-#              name: nginx-configmap-envvars
-        ports:
-        - containerPort: 8080
-          name: http-novo
+        image: nginx:latest
         livenessProbe:
           httpGet:
             port: http-novo
@@ -42,10 +27,27 @@ spec:
             port: http-novo
             path: /
             scheme: HTTP
-        volumeMounts:
-          - name: nginx-html
-            mountPath: /usr/share/nginx/html
+        ports:
+        - containerPort: 80
+          name: http-novo
+      - name: app
+        image: emanuelflp/k8s-course:latest
+        imagePullPolicy: Always
+#        env:
+#          - name: VARIAVEL_DIRETA
+#            value: "DEFINI_DIRETAMENTE"
+#          - name: VARIAVEL_DO_CONFIGMAP
+#            valueFrom:
+#              configMapKeyRef:
+#                key: K8S_COURSE
+#                name: nginx-configmap-envvars
+#        envFrom:
+#          - configMapRef:
+#              name: nginx-configmap-envvars
+#        volumeMounts:
+#          - name: nginx-html
+#            mountPath: /usr/share/nginx/html
       volumes:
-        - name: nginx-html
-          secret:
-            secretName: nginx-secret-envvars
+        - name: nginx-conf
+          configMap:
+            name: nginx-configmap
