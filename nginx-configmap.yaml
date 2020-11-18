@@ -29,3 +29,26 @@ data:
     <p><em>Thank you for using nginx.</em></p>
     </body>
     </html>
+  default.conf: |
+    server {
+        listen       80;
+        server_name  localhost;
+
+        #charset koi8-r;
+        #access_log  /var/log/nginx/host.access.log  main;
+
+        #error_page  404              /404.html;
+
+        # redirect server error pages to the static page /50x.html
+        #
+        error_page   500 502 503 504  /50x.html;
+        location = /ola.html {
+            root   /usr/share/nginx/html;
+        }
+
+        # proxy the PHP scripts to Apache listening on 127.0.0.1:80
+        #
+        location / {
+            proxy_pass   http://127.0.0.1:8080;
+        }
+    }
