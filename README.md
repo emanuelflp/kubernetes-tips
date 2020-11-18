@@ -28,3 +28,34 @@ Assuntos abordados por dia:
 - Secret
 - Volume EmptyDir
 ```
+
+Listar Contextos:
+
+```shell script
+kubectl config get-contexts
+```
+
+Selecionar o contexto como principal
+
+```shell script
+kubectl config use-context NOME_CONTEXTO
+```
+
+
+Comandos Basicos:
+
+Criar Namespace:
+```shell script
+kubectl create namespace NAMESPACE
+```
+
+Criar ou atualizar qualquer Objeto a partir de um arquivo:
+```shell script
+kubectl create -f NOMEARQUIVO
+kubectl apply -f NOMEARQUIVO
+```
+
+Deletar todos os objetos listados em arquivo
+```shell script
+kubectl delete -f NOMEARQUIVO
+```
