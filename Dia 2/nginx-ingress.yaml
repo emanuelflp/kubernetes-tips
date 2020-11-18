@@ -10,12 +10,10 @@ spec:
       http:
         paths:
           - path: /
-            pathType: Prefix
             backend:
               serviceName: nginx-service
               servicePort: http
           - path: /login
-            pathType: Prefix
             backend:
               serviceName: hello-app-service
               servicePort: http
