@@ -1,4 +1,4 @@
-apiVersion: networking.k8s.io/v1
+apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
   name: hello-app-ingress
@@ -12,17 +12,13 @@ spec:
           - path: /
             pathType: Prefix
             backend:
-              service:
-                name: nginx-service
-                port:
-                  name: http
+              serviceName: nginx-service
+              servicePort: http
           - path: /login
             pathType: Prefix
             backend:
-              service:
-                name: hello-app-service
-                port:
-                  name: http
+              serviceName: hello-app-service
+              servicePort: http
   tls:
     - hosts:
         - hello-app.local
