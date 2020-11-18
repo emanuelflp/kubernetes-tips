@@ -17,7 +17,3 @@ spec:
             backend:
               serviceName: hello-app-service
               servicePort: http
-  tls:
-    - hosts:
-        - hello-app.local
-      secretName: certificado
