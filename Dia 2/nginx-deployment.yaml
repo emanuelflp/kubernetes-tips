@@ -1,5 +1,5 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: nginx-deployment
   labels:
@@ -29,6 +29,9 @@ spec:
 #        envFrom:
 #          - configMapRef:
 #              name: nginx-configmap-envvars
+        resources:
+          requests:
+            cpu: 500m
         ports:
         - containerPort: 8080
           name: http-novo
@@ -43,9 +46,13 @@ spec:
             path: /
             scheme: HTTP
         volumeMounts:
-          - name: nginx-html
-            mountPath: /usr/share/nginx/html
+          - name: nginx-volume-persistente
+            mountPath: /tmp/nginx
+
       volumes:
         - name: nginx-html
           secret:
             secretName: nginx-secret-envvars
+        - name: nginx-volume-persistente
+          persistentVolumeClaim:
+            claimName: nginx-pvc
