@@ -6,7 +6,15 @@ metadata:
 rules:
   - verbs:
       - get
+      - list
     resources:
       - pods
+      - configmaps
     apiGroups:
       - ""
+  - verbs:
+      - get
+    resources:
+      - deployments
+    apiGroups:
+      - "apps"
