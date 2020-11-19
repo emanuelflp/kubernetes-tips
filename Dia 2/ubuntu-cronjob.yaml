@@ -1,0 +1,32 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: ubuntu-cronjob
+  labels:
+    app: ubuntu
+spec:
+  schedule: "*/2 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            app: ubuntu
+        spec:
+          restartPolicy: OnFailure
+          containers:
+          - name: ubuntu
+            image: ubuntu:latest
+            command:
+              - bash
+              - -c
+              - "sleep 30"
+            imagePullPolicy: Always
+            env:
+              - name: VARIAVEL_DIRETA
+                value: "DEFINI_DIRETAMENTE"
+              - name: VARIAVEL_DO_CONFIGMAP
+                valueFrom:
+                  configMapKeyRef:
+                    key: K8S_COURSE
+                    name: nginx-configmap-envvars

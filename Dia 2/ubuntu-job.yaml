@@ -5,14 +5,12 @@ metadata:
   labels:
     app: ubuntu
 spec:
-  selector:
-    matchLabels:
-      app: ubuntu
   template:
     metadata:
       labels:
         app: ubuntu
     spec:
+      restartPolicy: OnFailure
       containers:
       - name: ubuntu
         image: ubuntu:latest
