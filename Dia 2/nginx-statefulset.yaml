@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: nginx-deployment
+  labels:
+    app: nginx
+spec:
+  replicas: 3
+  serviceName: nginx-service-statefulset
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: gcr.io/google-samples/hello-app:1.0
+        imagePullPolicy: Always
+        env:
+          - name: VARIAVEL_DIRETA
+            value: "DEFINI_DIRETAMENTE"
+          - name: VARIAVEL_DO_CONFIGMAP
+            valueFrom:
+              configMapKeyRef:
+                key: K8S_COURSE
+                name: nginx-configmap-envvars
+#        envFrom:
+#          - configMapRef:
+#              name: nginx-configmap-envvars
+        resources:
+          requests:
+            cpu: 500m
+        ports:
+        - containerPort: 8080
+          name: http-novo
+        livenessProbe:
+          httpGet:
+            port: http-novo
+            path: /
+            scheme: HTTP
+        readinessProbe:
+          httpGet:
+            port: http-novo
+            path: /
+            scheme: HTTP
+        volumeMounts:
+          - name: nginx-volume-persistente
+            mountPath: /tmp/nginx
+
+  volumeClaimTemplates:
+  - metadata:
+      name: nginx-pvc
+    spec:
+      accessModes:
+        - ReadWriteOnce
+      resources:
+        requests:
+          storage: 8Gi
+      storageClassName: standard
