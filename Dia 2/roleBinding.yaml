@@ -1,0 +1,11 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: gabriel-roleBinding
+roleRef:
+  apiGroup: rbac.authorization.k8s.io/v1
+  kind: Role
+  name: gabriel-role
+subjects:
+  - kind: ServiceAccount
+    name: gabriel-dias
