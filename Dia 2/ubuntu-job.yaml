@@ -1,0 +1,31 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: ubuntu-job
+  labels:
+    app: ubuntu
+spec:
+  selector:
+    matchLabels:
+      app: ubuntu
+  template:
+    metadata:
+      labels:
+        app: ubuntu
+    spec:
+      containers:
+      - name: ubuntu
+        image: ubuntu:latest
+        command:
+          - bash
+          - -c
+          - "sleep 30"
+        imagePullPolicy: Always
+        env:
+          - name: VARIAVEL_DIRETA
+            value: "DEFINI_DIRETAMENTE"
+          - name: VARIAVEL_DO_CONFIGMAP
+            valueFrom:
+              configMapKeyRef:
+                key: K8S_COURSE
+                name: nginx-configmap-envvars
