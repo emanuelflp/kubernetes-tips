@@ -30,9 +30,9 @@ spec:
 #        envFrom:
 #          - configMapRef:
 #              name: nginx-configmap-envvars
-        resources:
-          requests:
-            cpu: 500m
+#        resources:
+#          requests:
+#            cpu: 500m
         ports:
         - containerPort: 8080
           name: http-novo
@@ -47,7 +47,7 @@ spec:
             path: /
             scheme: HTTP
         volumeMounts:
-          - name: nginx-volume-persistente
+          - name: nginx-pvc
             mountPath: /tmp/nginx
 
   volumeClaimTemplates:
